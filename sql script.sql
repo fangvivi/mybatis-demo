@@ -1,0 +1,1 @@
+create database  mybatis charset utf8mb4;
