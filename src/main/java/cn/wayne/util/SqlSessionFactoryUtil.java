@@ -65,7 +65,7 @@ public class SqlSessionFactoryUtil {
         } catch (Exception e){
             log.error("创建SqlSessionFactory异常【{}】", e.getMessage(), e);
         }
-        return sqlSessionFactory;
+        return null;
     }
 
 
