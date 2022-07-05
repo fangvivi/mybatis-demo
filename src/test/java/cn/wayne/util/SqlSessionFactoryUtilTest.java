@@ -8,7 +8,7 @@ class SqlSessionFactoryUtilTest {
 
     @Test
     void getSqlSessionFactory() {
-        assertNotNull(SqlSessionFactoryUtil.getSqlSessionFactoryByXML());
+        assertNotNull(SqlSessionFactoryUtil.getSqlSessionFactoryByXml());
     }
 
     @Test

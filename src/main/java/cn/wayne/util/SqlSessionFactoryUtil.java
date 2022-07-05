@@ -20,11 +20,14 @@ import java.util.Properties;
 @Slf4j
 public class SqlSessionFactoryUtil {
 
+    private SqlSessionFactoryUtil() {
+    }
+
     /**
      * 获取SqlSessionFactory对象
      * @return SqlSessionFactory
      */
-    public static SqlSessionFactory getSqlSessionFactoryByXML(){
+    public static SqlSessionFactory getSqlSessionFactoryByXml(){
         String resource = "mybatis-config.xml";
         try (InputStream stream = Resources.getResourceAsStream(resource)){
             return new SqlSessionFactoryBuilder().build(stream);
