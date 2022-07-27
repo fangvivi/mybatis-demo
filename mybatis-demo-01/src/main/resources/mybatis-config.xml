@@ -3,18 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <environments default="development">
-        <environment id="development">
+
+    <!-- 引入properties文件  -->
+    <properties resource="jdbc.properties"/>
+
+    <!--设置类型别名，在xxxMapper.xml中设置resultType时，就不用写类的全限定名了-->
+    <typeAliases>
+        <!--为某个类设置类型别名，如果不指定alias的值，类名就是别名，且不区分大小写-->
+        <!--<typeAlias type="com.wayne.mybatis.pojo.User" alias="user"/>-->
+
+        <!--以包为单位，为包下所有的类型设置默认的类型别名，别名就是类名且不区分大小写-->
+        <package name="com.wayne.mybatis.pojo"/>
+    </typeAliases>
+
+    <environments default="remote">
+        <environment id="local">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://192.168.121.131:3306/mybatis?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${local.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="remote">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${remote.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.username}"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mappers/UserMapper.xml"/>
+        <!--<mapper resource="mappers/UserMapper.xml"/>-->
+        <package name="com.wayne.mybatis.mapper"/>
     </mappers>
 </configuration>
