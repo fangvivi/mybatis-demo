@@ -23,30 +23,47 @@ import static org.junit.Assert.*;
 public class UserMapperTest {
     final static Logger logger = LoggerFactory.getLogger(UserMapperTest.class);
     @Test
-    public void testUserInsert() throws IOException {
+    public void testUserInsert() {
         String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            logger.error("{}",e.getMessage(), e);
+        }
         final SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        final SqlSession sqlSession = sqlSessionFactory.openSession();
-        final UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        assertEquals(1,mapper.insertUser());
-        sqlSession.commit();
+        try(final SqlSession sqlSession = sqlSessionFactory.openSession()){
+            final UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+            assertEquals(1,mapper.insertUser());
+            sqlSession.commit();
+        }catch (Exception e){
+            logger.error("{}",e.getMessage(), e);
+        }
     }
 
     @Test
-    public void testUserCRUD() throws IOException {
+    public void testUserCRUD(){
         String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
+        InputStream inputStream = null;
+        try {
+            inputStream = Resources.getResourceAsStream(resource);
+        } catch (IOException e) {
+            logger.error("{}",e.getMessage(), e);
+        }
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession(true);
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        //assertEquals(1,mapper.updateUser());
-        //assertEquals(1,mapper.deleteUser());
-        //User user = mapper.getUserById();
-        List<User> allUser = mapper.getAllUser();
-        assertNotNull(allUser);
-        assertThat(allUser.size(), is(4));
-        allUser.forEach(user -> logger.info("{}", user));
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(true)){
+            UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+            //assertEquals(1,mapper.updateUser());
+            //assertEquals(1,mapper.deleteUser());
+            //User user = mapper.getUserById();
+            List<User> allUser = mapper.getAllUser();
+            assertNotNull(allUser);
+            assertThat(allUser.size(), is(4));
+            allUser.forEach(user -> logger.info("{}", user));
+        } catch (Exception e) {
+            logger.error("{}",e.getMessage(), e);
+        }
+
 
     }
 }
