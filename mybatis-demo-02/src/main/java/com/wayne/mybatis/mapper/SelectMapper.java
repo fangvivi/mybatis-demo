@@ -19,6 +19,7 @@ import java.util.Map;
 public interface SelectMapper {
 
     /**
+     * 查询一个实体对象，使用实体类或者list接收结果集
      * 根据id获取用户
      * @param id 用户id
      * @return 用户信息
@@ -26,6 +27,7 @@ public interface SelectMapper {
     User getUserById(@Param("id") int id);
 
     /**
+     * 查询一个实体对象，使用map来接收结果集
      * 根据id查询用户，并把用户数据放入map中
      * 结果：{password=12312312, sex=M, id=1, age=18, email=lisi@163.com, username=李四}
      * @param id 用户id

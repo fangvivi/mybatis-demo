@@ -75,7 +75,7 @@ public class ParameterMapperTest {
     }
 
     @Test
-    public void testIsertUser(){
+    public void testInsertUser(){
         try(final SqlSession sqlSession = SqlSessionUtils.getSqlSession()){
             final ParameterMapper mapper = sqlSession.getMapper(ParameterMapper.class);
             User user = new User();
@@ -86,6 +86,18 @@ public class ParameterMapperTest {
             user.setEmail("xiaoming@163.com");
             final int cout = mapper.insertUser(user);
             assertEquals(1, cout);
+            log.info("{}", user);
+        }  catch (IOException e) {
+            log.error("{}",e.getMessage(), e);
+        }
+    }
+
+    @Test
+    public void testCheckLoginByParam(){
+        try(final SqlSession sqlSession = SqlSessionUtils.getSqlSession()){
+            final ParameterMapper mapper = sqlSession.getMapper(ParameterMapper.class);
+            final User user= mapper.checkLoginByParam("赵六","4534543");
+            assertNotNull(user);
             log.info("{}", user);
         }  catch (IOException e) {
             log.error("{}",e.getMessage(), e);

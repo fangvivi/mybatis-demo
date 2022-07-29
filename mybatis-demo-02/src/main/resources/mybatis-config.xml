@@ -9,7 +9,7 @@
         <typeAlias type="com.wayne.mybatis.pojo.User"/>
     </typeAliases>
 
-    <environments default="local">
+    <environments default="remote">
         <environment id="local">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
