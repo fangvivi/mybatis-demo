@@ -64,7 +64,19 @@ public class SelectMapperTest {
         try(SqlSession sqlSession = SqlSessionUtils.getSqlSession()){
             SelectMapper mapper = sqlSession.getMapper(SelectMapper.class);
             Map<String, Object> user = mapper.getAllUsersToMap();
-            assertThat(user.size(), is(3));
+            assertThat(user.size(), is(6));
+            log.info("{}", user);
+        } catch (IOException e) {
+            log.error("{}",e.getMessage(), e);
+        }
+    }
+
+    @Test
+    public void testGetAllUserToMapList(){
+        try(SqlSession sqlSession = SqlSessionUtils.getSqlSession()){
+            SelectMapper mapper = sqlSession.getMapper(SelectMapper.class);
+            List<Map<String, Object>> user = mapper.getAllUsersToMapList();
+            assertThat(user.size(), is(6));
             log.info("{}", user);
         } catch (IOException e) {
             log.error("{}",e.getMessage(), e);

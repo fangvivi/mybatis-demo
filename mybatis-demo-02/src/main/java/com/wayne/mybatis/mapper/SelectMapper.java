@@ -8,12 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * MyBatis的各种查询功能：
- *  1、若查询出的数据只有一条
- *     a>可以通过实体类对象接收
- *     b>可以通过list集合接收
- *     c>可以通过map集合接收
- *     结果：{password=12312312, sex=M, id=1, age=18, email=lisi@163.com, username=李四}
+ * MyBatis的各种查询功能
  * @author wayne
  */
 public interface SelectMapper {
@@ -50,6 +45,20 @@ public interface SelectMapper {
      */
     @MapKey("id")
     Map<String, Object> getAllUsersToMap();
+
+    /**
+     * 查询所有用户信息为map集合
+     * 将表中的数据以map集合的方式查询，一条数据对应一个map
+     * 若有多条数据，就会产生多个map集合，此时可以将这些map放在一个list集合中获取
+     * [
+     * {password=123456, sex=M, id=1, age=20, email=zhangsan@qq.com, username=张三},
+     * {password=123456, sex=M, id=2, age=15, email=lisi@163.com, username=李四},
+     * {password=123456, sex=F, id=3, age=16, email=wangwu@163.com, username=王五},
+     * {password=123456, sex=F, id=4, age=17, email=zhaoliu@163.com, username=赵六}
+     * ]
+     * @return 所有用户信息
+     */
+    List<Map<String, Object>> getAllUsersToMapList();
 
     /**
      * 获取用户的数量
