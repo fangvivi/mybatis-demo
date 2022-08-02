@@ -10,4 +10,10 @@
         <!--select * from t_user where username like concat('%', #{username}, '%')-->
         select * from t_user where username like "%"#{username}"%"
     </select>
+
+
+    <!--#{}会给表名添加单引号，这样会报错，所以这里只能用$()-->
+    <select id="getUserByTableName" resultType="User">
+        select * from ${tableName}
+    </select>
 </mapper>

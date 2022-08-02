@@ -17,4 +17,11 @@ public interface SQLMapper {
      * @return 用户信息
      */
     List<User> getUserByLike(@Param("username") String username);
+
+    /**
+     * 根据表名查询用户数据
+     * @param tableName 表名
+     * @return 查询到的用户信息
+     */
+    List<User> getUserByTableName(@Param("tableName") String tableName);
 }
