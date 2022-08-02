@@ -9,7 +9,7 @@
         <typeAlias type="com.wayne.mybatis.pojo.User"/>
     </typeAliases>
 
-    <environments default="remote">
+    <environments default="local">
         <environment id="local">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
@@ -34,5 +34,6 @@
     <mappers>
         <mapper resource="mappers/SelectMapper.xml"/>
         <mapper resource="mappers/ParameterMapper.xml"/>
+        <mapper resource="mappers/SQLMapper.xml"/>
     </mappers>
 </configuration>
