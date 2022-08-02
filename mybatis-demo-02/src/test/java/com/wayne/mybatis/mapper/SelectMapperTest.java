@@ -36,6 +36,19 @@ public class SelectMapperTest {
     }
 
     @Test
+    public void testGetUserListById() {
+        try(SqlSession sqlSession = SqlSessionUtils.getSqlSession()){
+            SelectMapper mapper = sqlSession.getMapper(SelectMapper.class);
+            List<User> user = mapper.getUserListById(4);
+            // 使用list接收结果集查不到的话，并不会返回空
+            assertNotNull(user);
+            log.info("{}", user.size());
+        } catch (IOException e) {
+            log.error("{}",e.getMessage(), e);
+        }
+    }
+
+    @Test
     public void testGetUserByIdToMap(){
         try(SqlSession sqlSession = SqlSessionUtils.getSqlSession()){
             SelectMapper mapper = sqlSession.getMapper(SelectMapper.class);

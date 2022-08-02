@@ -10,6 +10,12 @@
         select * from t_user where id = #{id}
     </select>
 
+    <select id="getUserListById" resultType="user" parameterType="int">
+        <!--select * from t_user where id = ${id} -->
+        <!--select * from t_user where id = ${aaa}-->
+        select * from t_user where id = #{id}
+    </select>
+
     <select id="getAllUsers" resultType="user">
         select * from t_user
     </select>

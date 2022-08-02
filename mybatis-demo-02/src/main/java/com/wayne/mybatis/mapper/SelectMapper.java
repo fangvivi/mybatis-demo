@@ -14,12 +14,20 @@ import java.util.Map;
 public interface SelectMapper {
 
     /**
-     * 查询一个实体对象，使用实体类或者list接收结果集
+     * 查询一个实体对象，使用实体类接收结果集
      * 根据id获取用户
      * @param id 用户id
      * @return 用户信息
      */
     User getUserById(@Param("id") int id);
+
+    /**
+     * 查询一个实体对象，使用list接收结果集
+     * 根据id获取用户列表，如果查不到并不会返回null
+     * @param id 用户id
+     * @return 用户信息
+     */
+    List<User> getUserListById(@Param("id") int id);
 
     /**
      * 查询一个实体对象，使用map来接收结果集
