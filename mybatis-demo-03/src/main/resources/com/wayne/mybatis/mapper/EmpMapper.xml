@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wayne.mybatis.mapper.EmpMapper">
+
+    <!--
+    resultMap：设置自定义映射
+    属性：
+        id：表示自定义映射的唯一标识
+        type：查询的数据要映射的实体类的类型
+    子标签：
+        id：设置主键的映射关系
+        result：设置普通字段的映射关系
+        association：设置多对一的映射关系
+        collection：设置一对多的映射关系
+    属性：
+        property：设置映射关系中实体类中的属性名
+        column：设置映射关系中表中的字段名
+    -->
+    <resultMap id="empResultMap" type="Emp">
+        <!--id 处理主键的映射关系-->
+        <id property="eid" column="eid"/>
+        <!--result 处理普通字段的映射关系-->
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <result property="empName" column="emp_name"/>
+        <result property="email" column="email"/>
+        <result property="did" column="did"/>
+    </resultMap>
+
+    <!--解决字段名和属性名不一致：给字段取别名-->
+    <select id="getAllEmpByAlias" resultType="emp">
+        select eid, emp_name empName, age, sex, email, did from t_emp;
+    </select>
+
+    <!--解决字段名和属性名不一致：通过开启驼峰命名自动映射，属性名要和字段名去掉下划线一样才可以生效-->
+    <!--如：把empName映射为emp_name-->
+    <select id="getAllEmpByGlobalConfig" resultType="Emp">
+        select * from t_emp
+    </select>
+
+    <!--resultType只能处理字段名和属性名相同的映射-->
+    <select id="getAllEmpByResultMap" resultMap="empResultMap">
+        select * from t_emp
+    </select>
+</mapper>

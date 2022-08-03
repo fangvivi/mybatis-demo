@@ -24,3 +24,11 @@ create table t_emp
     email    varchar(20),
     did      int
 ) charset = utf8mb4;
+
+insert into t_emp values (null,'张三',23,'男','123@qq.com',null),
+                         (null,'李四',32,'女','123@qq.com',null),
+                         (null,'王五',12,'男','123@qq.com',null),
+                         (null,'赵六',34,'女','123@qq.com',null),
+                         (null,'田七',28,'男','123@qq.com',null);
+
+insert into t_dept values(null,'A'),(null,'B'),(null,'C');

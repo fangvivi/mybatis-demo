@@ -16,4 +16,16 @@
     <select id="getUserByTableName" resultType="User">
         select * from ${tableName}
     </select>
+
+    <!--获取自增主键-->
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user
+        values
+        (null, #{username}, #{password}, #{age}, #{sex}, #{email})
+    </insert>
+
+    <!--使用#{}会自动加上单引号，最后的SQL会变成 delete from t_user where id in ('1,2,3,4,5')，SQL会出错-->
+    <delete id="deleteUsers">
+        delete from t_user where id in (${ids})
+    </delete>
 </mapper>

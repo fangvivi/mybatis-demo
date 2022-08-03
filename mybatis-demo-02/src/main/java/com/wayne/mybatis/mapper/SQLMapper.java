@@ -24,4 +24,18 @@ public interface SQLMapper {
      * @return 查询到的用户信息
      */
     List<User> getUserByTableName(@Param("tableName") String tableName);
+
+    /**
+     * 添加用户信息，获取自增的主键
+     * @param user 添加的用户信息
+     * @return 主键
+     */
+    int insertUser(User user);
+
+    /**
+     * 删除一个或多个用户
+     * @param ids 需要删除用户的id
+     * @return 影响的行数
+     */
+    int deleteUsers(@Param("ids") String ids);
 }
