@@ -5,16 +5,20 @@
 <configuration>
     <properties resource="jdbc.properties"/>
 
-    <!--<settings>
-        &lt;!&ndash;开启驼峰命名自动映射，如：把empName映射为emp_name&ndash;&gt;
-        &lt;!&ndash;<setting name="mapUnderscoreToCamelCase" value="true"/>&ndash;&gt;
-    </settings>-->
+    <settings>
+        <!--开启驼峰命名自动映射，如：把empName映射为emp_name-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启延迟加载，所有关联对象都会延迟加载，可以通过fetchType属性覆盖此设置-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--这个属性开启后，任何方法的调用都会加载对象的所有属性-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
 
     <typeAliases>
         <package name="com.wayne.mybatis.pojo"/>
     </typeAliases>
 
-    <environments default="local">
+    <environments default="remote">
         <environment id="local">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">

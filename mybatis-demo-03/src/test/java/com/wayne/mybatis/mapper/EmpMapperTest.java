@@ -52,4 +52,56 @@ public class EmpMapperTest {
             log.error("{}", e.getMessage(), e);
         }
     }
+
+    @Test
+    public void testGetEmpAndDeptByCascadeProperty(){
+        try(final SqlSession sqlSession = SqlSessionUtils.getSqlSession()) {
+            final EmpMapper mapper = sqlSession.getMapper(EmpMapper.class);
+            final Emp emp = mapper.getEmpAndDeptByCascadeProperty(5);
+            Assert.assertNotNull(emp.getDept());
+            log.info("{}",emp);
+        } catch (IOException e) {
+            log.error("{}", e.getMessage(), e);
+        }
+    }
+
+    @Test
+    public void testGetEmpAndDeptByAssociation(){
+        try(final SqlSession sqlSession = SqlSessionUtils.getSqlSession()) {
+            final EmpMapper mapper = sqlSession.getMapper(EmpMapper.class);
+            final Emp emp = mapper.getEmpAndDeptByAssociation(5);
+            Assert.assertNotNull(emp.getDept());
+            log.info("{}",emp);
+        } catch (IOException e) {
+            log.error("{}", e.getMessage(), e);
+        }
+    }
+
+    @Test
+    public void testGetEmpAndDeptByStep(){
+        try(final SqlSession sqlSession = SqlSessionUtils.getSqlSession()) {
+            final EmpMapper mapper = sqlSession.getMapper(EmpMapper.class);
+            final Emp emp = mapper.getEmpAndDeptByStepOne(5);
+            Assert.assertNotNull(emp.getDept());
+            log.info("{}",emp);
+        } catch (IOException e) {
+            log.error("{}", e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 测试延迟加载
+     */
+    @Test
+    public void testGetEmpAndDeptByStepLazyLoading(){
+        try(final SqlSession sqlSession = SqlSessionUtils.getSqlSession()) {
+            final EmpMapper mapper = sqlSession.getMapper(EmpMapper.class);
+            final Emp emp = mapper.getEmpAndDeptByStepOne(5);
+            // 开启延迟加载时，如果不访问员工的部门信息，那么查询部门信息的SQL就不会执行
+            Assert.assertNotNull(emp.getEmpName());
+            log.info("{}",emp.getEmpName());
+        } catch (IOException e) {
+            log.error("{}", e.getMessage(), e);
+        }
+    }
 }

@@ -26,8 +26,12 @@
         <result property="sex" column="sex"/>
         <result property="empName" column="emp_name"/>
         <result property="email" column="email"/>
-        <result property="did" column="did"/>
     </resultMap>
+
+    <!--resultType只能处理字段名和属性名相同的映射-->
+    <select id="getAllEmpByResultMap" resultMap="empResultMap">
+        select * from t_emp
+    </select>
 
     <!--解决字段名和属性名不一致：给字段取别名-->
     <select id="getAllEmpByAlias" resultType="emp">
@@ -40,8 +44,59 @@
         select * from t_emp
     </select>
 
-    <!--resultType只能处理字段名和属性名相同的映射-->
-    <select id="getAllEmpByResultMap" resultMap="empResultMap">
-        select * from t_emp
+    <resultMap id="empAndDeptResultMapOne" type="Emp">
+        <id property="eid" column="eid"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <result property="empName" column="emp_name"/>
+        <result property="email" column="email"/>
+        <result property="dept.did" column="did"/>
+        <result property="dept.deptName" column="dept_name"/>
+    </resultMap>
+    <!--处理多对一：通过级联属性的方式-->
+    <select id="getEmpAndDeptByCascadeProperty" resultMap="empAndDeptResultMapOne">
+        select * from t_emp left join t_dept td on t_emp.did = td.did
+        where t_emp.eid = #{eid}
     </select>
+
+    <resultMap id="empAndDeptResultMapTwo" type="Emp">
+        <id property="eid" column="eid"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <result property="empName" column="emp_name"/>
+        <result property="email" column="email"/>
+        <association property="dept" javaType="Dept">
+            <id property="did" column="did"/>
+            <result property="deptName" column="dept_name"/>
+        </association>
+    </resultMap>
+    <!--处理多对一：通过association标签-->
+    <select id="getEmpAndDeptByAssociation" resultMap="empAndDeptResultMapTwo">
+        select * from t_emp left join t_dept td on t_emp.did = td.did
+        where t_emp.eid = #{eid}
+    </select>
+
+    <!--association标签的column属性指定下一步查询所需的条件-->
+    <resultMap id="empAndDeptResultMapStep" type="Emp">
+        <id property="eid" column="eid"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <result property="empName" column="emp_name"/>
+        <result property="email" column="email"/>
+        <association property="dept"
+                     select="com.wayne.mybatis.mapper.DeptMapper.getEmpAndDeptByStepTwo"
+                     fetchType="lazy"
+                     column="did"/>
+    </resultMap>
+    <!--处理多对一，分步查询第一步：通过association分步查询-->
+    <select id="getEmpAndDeptByStepOne" resultMap="empAndDeptResultMapStep">
+        select * from t_emp where eid=#{eid}
+    </select>
+
+    <!--一对多，分步查询第二步，根据部门id获取该部门的所有员工-->
+    <select id="getDeptAndEmpByStepTwo" resultType="Emp">
+        select * from t_emp where did=#{did}
+    </select>
+
+
 </mapper>

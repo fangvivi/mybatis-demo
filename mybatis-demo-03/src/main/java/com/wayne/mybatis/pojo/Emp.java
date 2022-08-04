@@ -11,17 +11,19 @@ public class Emp {
     private String sex;
     private String email;
     private int did;
+    private Dept dept;
 
-    public Emp(int eid, String empName, int age, String sex, String email, int did) {
+    public Emp() {
+    }
+
+    public Emp(int eid, String empName, int age, String sex, String email, int did, Dept dept) {
         this.eid = eid;
         this.empName = empName;
         this.age = age;
         this.sex = sex;
         this.email = email;
         this.did = did;
-    }
-
-    public Emp() {
+        this.dept = dept;
     }
 
     public int getEid() {
@@ -73,6 +75,14 @@ public class Emp {
         this.did = did;
     }
 
+    public Dept getDept() {
+        return dept;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
+
     @Override
     public String toString() {
         return "Emp{" +
@@ -82,6 +92,7 @@ public class Emp {
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
                 ", did=" + did +
+                ", dept=" + dept +
                 '}';
     }
 }
