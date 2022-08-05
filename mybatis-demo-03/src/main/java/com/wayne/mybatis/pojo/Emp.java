@@ -10,20 +10,16 @@ public class Emp {
     private int age;
     private String sex;
     private String email;
-    private int did;
     private Dept dept;
 
     public Emp() {
     }
 
-    public Emp(int eid, String empName, int age, String sex, String email, int did, Dept dept) {
-        this.eid = eid;
+    public Emp( String empName, int age, String sex, String email) {
         this.empName = empName;
         this.age = age;
         this.sex = sex;
         this.email = email;
-        this.did = did;
-        this.dept = dept;
     }
 
     public int getEid() {
@@ -67,13 +63,6 @@ public class Emp {
         this.email = email;
     }
 
-    public int getDid() {
-        return did;
-    }
-
-    public void setDid(int did) {
-        this.did = did;
-    }
 
     public Dept getDept() {
         return dept;
@@ -91,7 +80,6 @@ public class Emp {
                 ", age=" + age +
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
-                ", did=" + did +
                 ", dept=" + dept +
                 '}';
     }
