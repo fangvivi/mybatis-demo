@@ -29,15 +29,13 @@
     </delete>
 
     <!--可以把多次出现的SQL进行封装、复用-->
-    <sql id="baseSelect">
-        select * from t_emp
-    </sql>
+    <sql id="empColumns">eid, emp_name, age, sex, email</sql>
     <!--prefix指定的内容会添加在所有子标签（if）之前-->
     <!--prefixOverrides：去掉条件前面的多余的内容，这里是去掉"and"、"or"-->
     <!--suffixOverrides：去掉条件后面的多余的内容，这里是去掉","、"and"、"or"-->
     <!--select * from t_emp where age=? and email=? ;-->
     <select id="getEmpByCondition" resultType="Emp">
-        <include refid="baseSelect"/>
+        select <include refid="empColumns"/> from t_emp
         <trim prefix="where" suffix=";" suffixOverrides="or|and" prefixOverrides=",|and|or">
             <if test="empName != null and empName !=''">
                emp_name=#{empName} and

@@ -28,14 +28,14 @@ public interface DynamicSQLMapper {
     List<Emp> getEmpByChoose(Emp emp);
 
     /**
-     * 批量删除
+     * 通过数组批量删除
      * @param eids 需要删除的员工id
      * @return 影响的行数
      */
     int deleteMoreByArray(@Param("eids") Integer[] eids);
 
     /**
-     * 批量插入
+     * 通过集合批量插入
      * @param emps 需要插入的员工信息
      * @return 影响的行数
      */

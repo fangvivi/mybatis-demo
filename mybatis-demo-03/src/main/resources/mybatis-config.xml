@@ -18,7 +18,7 @@
         <package name="com.wayne.mybatis.pojo"/>
     </typeAliases>
 
-    <environments default="remote">
+    <environments default="local">
         <environment id="local">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
