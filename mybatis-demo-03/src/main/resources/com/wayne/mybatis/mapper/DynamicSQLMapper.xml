@@ -4,14 +4,63 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wayne.mybatis.mapper.DynamicSQLMapper">
 
+    <!--insert into t_emp values (null, ?,?,?,?,null) , (null, ?,?,?,?,null) , (null, ?,?,?,?,null)-->
+    <insert id="insertMoreByList">
+        insert into t_emp values
+        <foreach collection="emps" item="emp" separator=",">
+            (null, #{emp.empName},#{emp.age},#{emp.sex},#{emp.email},null)
+        </foreach>
+    </insert>
+
+    <!--拼接的SQL：delete from t_emp where eid in ( ? , ? )-->
+    <delete id="deleteMoreByArray">
+        delete from t_emp where
+        <foreach collection="eids" item="eid" separator="," open="eid in (" close=")" >
+                #{eid}
+        </foreach>
+    </delete>
+
+    <!--拼接的SQL：delete from t_emp where eid = ? or eid = ? or eid = ?-->
+    <delete id="deleteMoreByArrayOne">
+        delete from t_emp where
+        <foreach collection="eids" item="eid" separator="or" >
+            eid = #{eid}
+        </foreach>
+    </delete>
+
+    <!--可以把多次出现的SQL进行封装、复用-->
+    <sql id="baseSelect">
+        select * from t_emp
+    </sql>
+    <!--prefix指定的内容会添加在所有子标签（if）之前-->
+    <!--prefixOverrides：去掉条件前面的多余的内容，这里是去掉"and"、"or"-->
+    <!--suffixOverrides：去掉条件后面的多余的内容，这里是去掉","、"and"、"or"-->
+    <!--select * from t_emp where age=? and email=? ;-->
+    <select id="getEmpByCondition" resultType="Emp">
+        <include refid="baseSelect"/>
+        <trim prefix="where" suffix=";" suffixOverrides="or|and" prefixOverrides=",|and|or">
+            <if test="empName != null and empName !=''">
+               emp_name=#{empName} and
+            </if>
+            <if test="sex != null and sex !=''">
+                sex=#{sex} and
+            </if>
+            <if test="age != null and age !=''">
+                , age=#{age} and
+            </if>
+            <if test="email != null and email !=''">
+                email=#{email} and
+            </if>
+        </trim>
+    </select>
 
     <!--where标签，可以去掉条件最前面多余的and或者or-->
-    <!--比如emp_name的值为空时，去掉前面的and-->
-    <select id="getEmpByCondition" resultType="Emp">
+    <!--比如empName、sex为空，age的值不为空时，去掉前面的and-->
+    <select id="getEmpByConditionTwo" resultType="Emp">
         select * from t_emp
         <where>
             <if test="empName != null and empName !=''">
-                emp_name=#{empName} and
+                and emp_name=#{empName}
             </if>
             <if test="sex != null and sex !=''">
                 and sex=#{sex}
@@ -41,6 +90,31 @@
             and email=#{email}
         </if>
     </select>
+
+    <!--choose标签内只会有一个when生效，类似于if..else if..else，如果有一个when生效，后面的就会被忽略-->
+    <select id="getEmpByChoose" resultType="Emp">
+        select * from t_emp
+        <where>
+            <choose>
+                <when test="empName != null and empName !=''">
+                    emp_name=#{empName}
+                </when>
+                <when test="sex != null and sex !=''">
+                    sex=#{sex}
+                </when>
+                <when test="age != null and age !=''">
+                    age=#{age}
+                </when>
+                <when test="email != null and email !=''">
+                    email=#{email}
+                </when>
+                <otherwise>
+                    did=1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
 
 
 </mapper>
