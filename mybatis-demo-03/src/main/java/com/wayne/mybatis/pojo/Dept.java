@@ -1,12 +1,13 @@
 package com.wayne.mybatis.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author wayne
  * @date 2022-08-03 22:30
  */
-public class Dept {
+public class Dept implements Serializable {
 
     private int did;
     private String deptName;
