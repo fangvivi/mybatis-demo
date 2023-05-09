@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wayne.mybatis.mapper.UserMapper">
     <insert id="insertUser">
-        insert into t_user values (null, "张三", "123456", 20, "M", "zhangsan@qq.com")
+        insert into t_user values (null, "小明", "123456", 35, "M", "xiaoming@qq.com")
     </insert>
 
     <update id="updateUser">
